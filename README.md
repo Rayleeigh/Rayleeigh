@@ -9,7 +9,7 @@ https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/a
 <img src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api?username=rayleeigh&theme=dark&show_icons=true&hide_border=true&layout=compact&include_orgs=true" align="right" width="512">
 </a>
 <a>
-<img src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api/top-langs/?username=rayleeigh&include_orgs=true&theme=dark&show_icons=true&hide_border=true&layout=compact" align="right" width="512">
+<img src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api/top-langs/?username=rayleeigh&include_orgs=true&theme=dark&show_icons=true&hide_border=true&layout=compact" align="left" width="512">
 </a>
 
 <img src="https://github-readme-stats.vercel.app/api/pin?username=rayleeigh&repo=Kuzen" width="512">
