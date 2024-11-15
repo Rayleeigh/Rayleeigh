@@ -7,7 +7,7 @@ https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/a
 
 <div align="center">
   <a href="https://github.com/anuraghazra/github-readme-stats">
-    <img align="top" width="475.5" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api?username=rayleeigh&theme=dark&show_icons=true&hide_border=true&layout=compact&include_orgs=true" alt="GitHub Stats" />
+    <img align="top" width="475.8" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api?username=rayleeigh&theme=dark&show_icons=true&hide_border=true&layout=compact&include_orgs=true" alt="GitHub Stats" />
   </a>
   <span style="display:inline-block; width: 10px;"></span>
   <a href="https://github.com/anuraghazra/anuraghazra.github.io">
