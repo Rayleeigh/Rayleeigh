@@ -22,7 +22,5 @@ https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/a
   <img align="center" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api/top-langs/?username=rayleeigh&include_orgs=true&theme=dark&show_icons=true&hide_border=true&layout=compact" />
 </a>
 
-https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api/top-langs/?username=rayleeigh&include_orgs=true&theme=dark&show_icons=true&hide_border=true&layout=compact
-
 <img src="https://github-readme-stats.vercel.app/api/pin?username=rayleeigh&repo=Kuzen" width="512">
 
