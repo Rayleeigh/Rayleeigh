@@ -16,7 +16,7 @@ https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/a
 <img src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api/top-langs/?username=rayleeigh&include_orgs=true&theme=dark&show_icons=true&hide_border=true&layout=compact" align="center" width="500">
 
 <a href="https://github.com/anuraghazra/github-readme-stats">
-  <img align="center" width="500" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api?username=rayleeigh&theme=dark&show_icons=true&hide_border=true&layout=compact&include_orgs=true" />
+  <img align="left" width="500" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api?username=rayleeigh&theme=dark&show_icons=true&hide_border=true&layout=compact&include_orgs=true" />
 </a>
 <a href="https://github.com/anuraghazra/anuraghazra.github.io">
   <img align="center" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api/top-langs/?username=rayleeigh&include_orgs=true&theme=dark&show_icons=true&hide_border=true&layout=compact" />
