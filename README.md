@@ -5,12 +5,15 @@
 
 https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api/top-langs/?username=rayleeigh&include_orgs=true&theme=dark&show_icons=true&hide_border=true&layout=compact
 
-<a href="https://github.com/anuraghazra/github-readme-stats">
-  <img align="left" width="470" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api?username=rayleeigh&theme=dark&show_icons=true&hide_border=true&layout=compact&include_orgs=true" />
-</a>
-<a href="https://github.com/anuraghazra/anuraghazra.github.io">
-  <img align="right" width="400" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api/top-langs/?username=rayleeigh&include_orgs=true&theme=dark&show_icons=true&hide_border=true&layout=compact" />
-</a>
+<div align="center">
+  <a href="https://github.com/anuraghazra/github-readme-stats">
+    <img align="top" width="470" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api?username=rayleeigh&theme=dark&show_icons=true&hide_border=true&layout=compact&include_orgs=true" alt="GitHub Stats" />
+  </a>
+  <span style="display:inline-block; width: 10px;"></span>
+  <a href="https://github.com/anuraghazra/anuraghazra.github.io">
+    <img align="top" width="400" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api/top-langs/?username=rayleeigh&include_orgs=true&theme=dark&show_icons=true&hide_border=true&layout=compact" alt="Top Languages" />
+  </a>
+</div>
 
 
 
