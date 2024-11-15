@@ -19,7 +19,7 @@
   </a>
   <span style="display:inline-block; width: 10px;"></span>
   <a>
-    <img align="top" width="400" src="https://github-readme-stats.vercel.app/api/pin/?username=rayleeigh&repo=Kuzen&theme=dark" />
+    <img align="top" width="400" src="https://github-readme-stats.vercel.app/api/pin/?username=rayleeigh&repo=Kuzen&theme=dark&hide_border=true" />
   </a>
 </div>
 
