@@ -17,10 +17,10 @@
   <!-- Second Row of Images with Matching Width -->
   <div style="display: inline-flex; align-items: center; gap: 60px;">
     <a>
-      <img width="450" src="https://github-readme-stats.vercel.app/api/pin/?username=rayleeigh&repo=Kuzen&theme=dark&hide_border=true" alt="Pinned Repo 1" />
+      <img width="400" src="https://github-readme-stats.vercel.app/api/pin/?username=rayleeigh&repo=Kuzen&theme=dark&hide_border=true" alt="Pinned Repo 1" />
     </a>
     <a>
-      <img width="450" src="https://github-readme-stats.vercel.app/api/pin/?username=rayleeigh&repo=Kuzen&theme=dark&hide_border=true" alt="Pinned Repo 2" />
+      <img width="400" src="https://github-readme-stats.vercel.app/api/pin/?username=rayleeigh&repo=Kuzen&theme=dark&hide_border=true" alt="Pinned Repo 2" />
     </a>
   </div>
 </div>
