@@ -2,11 +2,11 @@
 
 <div align="center">
   <a>
-    <img align="top" width="476" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api?username=rayleeigh&theme=dark&show_icons=true&hide_border=true&layout=compact&include_orgs=true" alt="GitHub Stats" />
+    <img align="top" width="40%" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api?username=rayleeigh&theme=dark&show_icons=true&hide_border=true&layout=compact&include_orgs=true" alt="GitHub Stats" />
   </a>
   <span style="display:inline-block; width: 10px;"></span>
   <a>
-    <img align="top" width="400" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api/top-langs/?username=rayleeigh&include_orgs=true&theme=dark&show_icons=true&hide_border=true&layout=compact" alt="Top Languages" />
+    <img align="top" width="40%" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api/top-langs/?username=rayleeigh&include_orgs=true&theme=dark&show_icons=true&hide_border=true&layout=compact" alt="Top Languages" />
   </a>
 </div>
 
