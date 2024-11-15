@@ -15,11 +15,11 @@
 
 <div align="center">
   <a>
-    <img align="top" width="476" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api?username=rayleeigh&theme=dark&show_icons=true&hide_border=true&layout=compact&include_orgs=true" alt="GitHub Stats" />
+    <img align="top" src="https://github-readme-stats.vercel.app/api/pin/?username=rayleeigh&repo=Kuzen&theme=dark&hide_border=true" alt="GitHub Stats" />
   </a>
   <span style="display:inline-block; width: 10px;"></span>
   <a>
-    <img align="top" width="400" src="https://github-readme-stats.vercel.app/api/pin/?username=rayleeigh&repo=Kuzen&theme=dark&hide_border=true" />
+    <img align="top" src="https://github-readme-stats.vercel.app/api/pin/?username=rayleeigh&repo=Kuzen&theme=dark&hide_border=true" />
   </a>
 </div>
 
