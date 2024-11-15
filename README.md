@@ -15,9 +15,9 @@
 
 <div align="center">
   <a>
-    <img align="top" width="476" src="https://github-readme-stats.vercel.app/api/pin/?username=rayleeigh&repo=Kuzen&theme=dark&hide_border=true" alt="GitHub Stats" />
+    <img align="top" width="400" src="https://github-readme-stats.vercel.app/api/pin/?username=rayleeigh&repo=Kuzen&theme=dark&hide_border=true" alt="GitHub Stats" />
   </a>
-  <span style="display:inline-block; width: 10px;"></span>
+  <span style="display:inline-block; width: 100px;"></span>
   <a>
     <img align="top" width="400" src="https://github-readme-stats.vercel.app/api/pin/?username=rayleeigh&repo=Kuzen&theme=dark&hide_border=true" />
   </a>
