@@ -5,7 +5,7 @@
   <!-- First Row of Images with Uniform Width -->
   <div style="display: inline-flex; align-items: center; gap: 60px;">
     <a>
-      <img width="450" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api?username=rayleeigh&theme=dark&show_icons=true&hide_border=true&layout=compact&include_orgs=true" alt="GitHub Stats" />
+      <img width="450" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api?username=rayleeigh&theme=dark&show_icons=true&hide_border=true&layout=compact&include_orgs=true" alt="GitHub Stats"/>
     </a>
     <a>
       <img width="374" src="https://github-readme-stats-git-masterorgs-github-readme-stats-team.vercel.app/api/top-langs/?username=rayleeigh&include_orgs=true&theme=dark&show_icons=true&hide_border=true&layout=compact" alt="Top Languages" />
