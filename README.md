@@ -12,3 +12,9 @@
     </a>
   </div>
 </div>
+
+# New Naming Convention
+The new naming convention is the following HPI + YYYY + NAME
+HPI  = Hobby Project and Inventions
+YYYY = Year
+NAME = Name of project e.g (Kuma)
