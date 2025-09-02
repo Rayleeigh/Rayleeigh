@@ -16,7 +16,7 @@
 # New Naming Convention
 The new naming convention is the following HPI + YYYY + NAME
 
-HPI  = Hobby Project and Inventions
+HPI  = Home Project and Inventions
 
 YYYY = Year
 
