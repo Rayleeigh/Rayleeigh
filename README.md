@@ -13,10 +13,10 @@
   </div>
 </div>
 
-# New Naming Convention
-The new naming convention is the following HPI + YYYY + NAME
+# Naming Convention
+The new naming convention is the following HAA + YYYY + NAME
 
-HPI  = Home Project and Inventions
+HAA  = Home Automation and Advancement
 
 YYYY = Year
 
