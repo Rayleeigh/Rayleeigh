@@ -14,10 +14,8 @@
 </div>
 
 # Naming Convention
-The new naming convention is the following HAA + YYYY + NAME
+The new naming convention is the following HAA + NAME
 
 HAA  = Home Automation and Advancement
-
-YYYY = Year
 
 NAME = Name of project e.g (Kuma)
