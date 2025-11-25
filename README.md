@@ -1,5 +1,3 @@
-# ⭐ **FULL PROFESSIONAL GITHUB PROFILE README**
-
 <!-- ========================= -->
 <!--      ANIMATED HEADER      -->
 <!-- ========================= -->
