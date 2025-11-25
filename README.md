@@ -15,8 +15,14 @@
 <!--         ABOUT ME          -->
 <!-- ========================= -->
 ## 👋 About Me
-I'm **Rayleeigh**, an IT professional who loves building systems that improve everyday life.  
-My focus is on **Home Automation**, **Self-Hosting**, and **Advancement Projects** that make technology smarter and more efficient.
+
+I'm **Rayleeigh**, an IT professional passionate about building systems that make everyday life smarter and more efficient.  
+I focus on:
+
+- 🏡 **Home Automation**  
+- 🖥️ **Self-Hosting**  
+- 🚀 **Advancement Projects**  
+- ⚙️ **IT Infrastructure + Automation**
 
 ---
 
@@ -46,12 +52,13 @@ My focus is on **Home Automation**, **Self-Hosting**, and **Advancement Projects
 <!--    NAMING CONVENTION      -->
 <!-- ========================= -->
 ## 🏡 HAA Naming Convention  
-All my Home Automation projects follow this structure:
+
+All Home Automation projects follow the format:
 
 HAA + NAME
 
-- **HAA** = *Home Automation and Advancement*  
-- **NAME** = Project name (example: `Kuma`)
+- **HAA** = Home Automation and Advancement  
+- **NAME** = Project name (example: `Kuma`)  
 
 ---
 
@@ -66,22 +73,6 @@ Self-hosted monitoring & automation layer with custom integrations.
 ### 🔹 **HAA-Sentinel**
 Security automation: cameras, sensors, motion analytics, alerts.
 
-> Want me to help you write project descriptions or make cool project badges?  
-> Just ask!
-
 ---
 
-<!-- ========================= -->
-<!--     SOCIAL / CONTACT      -->
-<!-- ========================= -->
-## 🌐 Connect With Me
-<p>
-  <a href="#"><img src="https://skillicons.dev/icons?i=github" /></a>
-  <a href="#"><img src="https://skillicons.dev/icons?i=discord" /></a>
-  <a href="#"><img src="https://skillicons.dev/icons?i=linkedin" /></a>
-</p>
-
----
-
-<p align="center">✨ *Building smarter automation, one project at a time.* ✨</p>
-
+<p align="center">✨ More projects coming soon! ✨</p>
