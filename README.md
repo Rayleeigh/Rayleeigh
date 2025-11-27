@@ -67,11 +67,8 @@ HAA + NAME
 <!-- ========================= -->
 ## 🚀 Featured Projects
 
-### 🔹 **HAA-Kuma**
-Self-hosted monitoring & automation layer with custom integrations.
-
-### 🔹 **HAA-Sentinel**
-Security automation: cameras, sensors, motion analytics, alerts.
+### [🔹 HAA-Sora](https://github.com/Rayleeigh/HAA-Sora)
+Block Programming for Terraform (AWS)
 
 ---
 
