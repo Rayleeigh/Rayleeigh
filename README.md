@@ -59,17 +59,3 @@ HAA + NAME
 
 - **HAA** = Home Automation and Advancement  
 - **NAME** = Project name (example: `Kuma`)  
-
----
-
-<!-- ========================= -->
-<!--     FEATURED PROJECTS     -->
-<!-- ========================= -->
-## 🚀 Featured Projects
-
-### [🔹 HAA-Sora](https://github.com/Rayleeigh/HAA-Sora)
-Block Programming for Terraform (AWS)
-
----
-
-<p align="center">✨ More projects coming soon! ✨</p>
