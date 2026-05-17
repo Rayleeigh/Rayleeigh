@@ -15,24 +15,165 @@ if (Test-Path $Global:OmpThemePath) {
 # =========================
 
 $Global:ProfileCommands = [ordered]@{
-    "go-git"                         = "Open ~/Documents/GitHub"
-    "git-clo <user> <repo>"          = "Clone a GitHub repository"
-    "git-clo <user> <repo> -Open"    = "Clone + open in VS Code"
-    "open-repo <repo>"               = "Find and open a local repo in VS Code"
-    "edit-profile"                   = "Open this profile in VS Code"
-    "reload-profile"                 = "Reload this PowerShell profile"
-    "mkcd <folder>"                  = "Create a folder and enter it"
-    "cls-all"                        = "Clear screen and command history"
-    "gs"                             = "Git status"
-    "ga"                             = "Git add ."
-    "gcmsg <message>"                = "Git commit with message"
-    "gp"                             = "Git push"
-    "gl"                             = "Git pull"
-    "omp pull profile"               = "Download/update Oh My Posh theme"
-    "omp set profile"                = "Load local Oh My Posh theme"
-    "add-command <cmd> <desc>"       = "Add/update a command in this session"
-    "manual"                         = "Show all available profile commands"
+    "go-git" = @{
+        Summary    = "Open ~/Documents/GitHub"
+        Usage      = "go-git"
+        Parameters = @()
+        Details    = "Creates ~/Documents/GitHub if missing, then moves your terminal into it."
+    }
+
+    "git-clo <user> <repo>" = @{
+        Summary    = "Clone a GitHub repository"
+        Usage      = "git-clo microsoft vscode"
+        Parameters = @(
+            "<user> = GitHub username or organization"
+            "<repo> = Repository name only"
+        )
+        Details    = "Clones https://github.com/<user>/<repo> into ~/Documents/GitHub."
+    }
+
+    "git-clo <user> <repo> -Open" = @{
+        Summary    = "Clone + open in VS Code"
+        Usage      = "git-clo microsoft vscode -Open"
+        Parameters = @(
+            "<user> = GitHub username or organization"
+            "<repo> = Repository name only"
+            "-Open  = Optional flag. Opens the cloned repo in VS Code"
+        )
+        Details    = "Clones the repository, enters the folder, then opens it with code ."
+    }
+
+    "open-repo <repo>" = @{
+        Summary    = "Find and open a local repo in VS Code"
+        Usage      = "open-repo vscode"
+        Parameters = @(
+            "<repo> = Full or partial local repository folder name"
+        )
+        Details    = "Searches Documents/GitHub, Documents, Desktop, and Downloads for matching Git repositories."
+    }
+
+    "edit-profile" = @{
+        Summary    = "Open this profile in VS Code"
+        Usage      = "edit-profile"
+        Parameters = @()
+        Details    = "Opens your PowerShell profile file in VS Code."
+    }
+
+    "reload-profile" = @{
+        Summary    = "Reload this PowerShell profile"
+        Usage      = "reload-profile"
+        Parameters = @()
+        Details    = "Reloads your profile without restarting PowerShell."
+    }
+
+    "mkcd <folder>" = @{
+        Summary    = "Create a folder and enter it"
+        Usage      = "mkcd my-project"
+        Parameters = @(
+            "<folder> = Folder name or path to create"
+        )
+        Details    = "Creates the folder if missing, then moves into it."
+    }
+
+    "cls-all" = @{
+        Summary    = "Clear screen and command history"
+        Usage      = "cls-all"
+        Parameters = @()
+        Details    = "Clears the terminal screen and the current session command history."
+    }
+
+    "gs" = @{
+        Summary    = "Git status"
+        Usage      = "gs"
+        Parameters = @()
+        Details    = "Shortcut for git status."
+    }
+
+    "ga" = @{
+        Summary    = "Git add ."
+        Usage      = "ga"
+        Parameters = @()
+        Details    = "Stages all changed files in the current Git repository."
+    }
+
+    "gcmsg <message>" = @{
+        Summary    = "Git commit with message"
+        Usage      = 'gcmsg "Update profile tools"'
+        Parameters = @(
+            "<message> = Commit message wrapped in quotes"
+        )
+        Details    = "Creates a Git commit using the provided message."
+    }
+
+    "gp" = @{
+        Summary    = "Git push"
+        Usage      = "gp"
+        Parameters = @()
+        Details    = "Pushes committed changes to the configured remote branch."
+    }
+
+    "gl" = @{
+        Summary    = "Git pull"
+        Usage      = "gl"
+        Parameters = @()
+        Details    = "Pulls latest changes from the configured remote branch."
+    }
+
+    "omp pull profile" = @{
+        Summary    = "Download/update Oh My Posh theme"
+        Usage      = "omp pull profile"
+        Parameters = @(
+            "pull    = Download/update action"
+            "profile = Target local profile theme"
+        )
+        Details    = "Downloads the cloud-native-azure Oh My Posh theme into ~/.poshthemes."
+    }
+
+    "omp set profile" = @{
+        Summary    = "Load local Oh My Posh theme"
+        Usage      = "omp set profile"
+        Parameters = @(
+            "set     = Load/apply action"
+            "profile = Target local profile theme"
+        )
+        Details    = "Loads the local Oh My Posh theme from ~/.poshthemes."
+    }
+
+    "add-command <cmd> <summary>" = @{
+        Summary    = "Add/update a command in this session"
+        Usage      = 'add-command "deploy <env>" "Deploy project" "deploy prod" @("<env> = Target environment") "Deploys the project."'
+        Parameters = @(
+            "<cmd>        = Command name/signature"
+            "<summary>    = Short description"
+            "<usage>      = Optional usage example"
+            "<parameters> = Optional parameter list"
+            "<details>    = Optional detailed explanation"
+        )
+        Details    = "Adds or updates a command in the current in-memory command registry."
+    }
+
+    "manual" = @{
+        Summary    = "Show compact command overview"
+        Usage      = "manual"
+        Parameters = @()
+        Details    = "Shows all registered profile commands in compact format."
+    }
+
+    "manual -Advanced -Search <cmdlet>" = @{
+        Summary    = "Show detailed paginated manual (also allows for specific search)"
+        Usage      = "manual -Advanced -Search git-clo -PageSize 5"
+        Parameters = @(
+            "-Advanced = Show detailed command documentation"
+            "-Search   = Optional command search keyword"
+            "-PageSize = Optional number of commands per page"
+        )
+        Details    = "Shows detailed command help with usage, parameters, explanations, and optional search filtering."
+    }
 }
+
+# =========================
+# Registry Helper
+# =========================
 
 function add-command {
     param(
@@ -40,14 +181,25 @@ function add-command {
         [string]$Command,
 
         [Parameter(Mandatory=$true)]
-        [string]$Description
+        [string]$Summary,
+
+        [string]$Usage = $Command,
+
+        [string[]]$Parameters = @(),
+
+        [string]$Details = $Summary
     )
 
-    $Global:ProfileCommands[$Command] = $Description
+    $Global:ProfileCommands[$Command] = @{
+        Summary    = $Summary
+        Usage      = $Usage
+        Parameters = $Parameters
+        Details    = $Details
+    }
 
     Write-Host ""
     Write-Host "Command added:" -ForegroundColor Green
-    "{0,-35} {1}" -f "  $Command", "→ $Description" | Write-Host -ForegroundColor White
+    "{0,-35} {1}" -f "  $Command", "→ $Summary" | Write-Host -ForegroundColor White
     Write-Host ""
 }
 
@@ -84,7 +236,6 @@ function git-clo {
     }
 
     Set-Location $githubDir
-
     git clone "https://github.com/$User/$Repo"
 
     $repoPath = Join-Path $githubDir $Repo
@@ -255,24 +406,125 @@ function gl { git pull }
 
 function Show-CommandList {
     foreach ($cmd in $Global:ProfileCommands.GetEnumerator()) {
-        "{0,-35} {1}" -f "  $($cmd.Key)", "→ $($cmd.Value)" | Write-Host -ForegroundColor White
+        "{0,-35} {1}" -f "  $($cmd.Key)", "→ $($cmd.Value.Summary)" | Write-Host -ForegroundColor White
     }
 }
 
 function manual {
-    Write-Host ""
-    Write-Host "╔══════════════════════════════════════════════╗" -ForegroundColor Cyan
-    Write-Host "║              PowerShell Manual              ║" -ForegroundColor Green
-    Write-Host "╚══════════════════════════════════════════════╝" -ForegroundColor Cyan
-    Write-Host ""
+    param(
+        [switch]$Advanced,
+        [string]$Search,
+        [int]$PageSize = 5
+    )
 
-    Write-Host " Available Commands" -ForegroundColor Yellow
-    Write-Host " ─────────────────────────────────────────────" -ForegroundColor DarkGray
-    Write-Host ""
+    $commands = @($Global:ProfileCommands.GetEnumerator())
 
-    Show-CommandList
+    if ($Search) {
+        $commands = @(
+            $commands | Where-Object {
+                $_.Key -like "*$Search*" -or
+                $_.Value.Summary -like "*$Search*" -or
+                $_.Value.Usage -like "*$Search*" -or
+                $_.Value.Details -like "*$Search*"
+            }
+        )
+    }
 
-    Write-Host ""
+    if (-not $Advanced) {
+        Write-Host ""
+        Write-Host "╔══════════════════════════════════════════════╗" -ForegroundColor Cyan
+        Write-Host "║              PowerShell Manual              ║" -ForegroundColor Green
+        Write-Host "╚══════════════════════════════════════════════╝" -ForegroundColor Cyan
+        Write-Host ""
+
+        Write-Host " Command Overview" -ForegroundColor Yellow
+        Write-Host " ─────────────────────────────────────────────" -ForegroundColor DarkGray
+        Write-Host ""
+
+        foreach ($cmd in $commands) {
+            "{0,-35} {1}" -f "  $($cmd.Key)", "→ $($cmd.Value.Summary)" | Write-Host -ForegroundColor White
+        }
+
+        Write-Host ""
+        Write-Host "Tip: Run 'manual -Advanced' for detailed help." -ForegroundColor DarkGray
+        Write-Host "Tip: Run 'manual -Advanced -Search git-clo' to search." -ForegroundColor DarkGray
+        Write-Host ""
+        return
+    }
+
+    if ($commands.Count -eq 0) {
+        Write-Host ""
+        Write-Host "No commands found matching: $Search" -ForegroundColor Red
+        Write-Host ""
+        return
+    }
+
+    $total = $commands.Count
+    $page = 0
+    $totalPages = [Math]::Ceiling($total / $PageSize)
+
+    while ($page * $PageSize -lt $total) {
+        Clear-Host
+
+        $start = $page * $PageSize
+        $end = [Math]::Min($start + $PageSize - 1, $total - 1)
+
+        Write-Host ""
+        Write-Host "╔══════════════════════════════════════════════╗" -ForegroundColor Cyan
+        Write-Host "║          Advanced PowerShell Manual         ║" -ForegroundColor Green
+        Write-Host "╚══════════════════════════════════════════════╝" -ForegroundColor Cyan
+        Write-Host ""
+
+        if ($Search) {
+            Write-Host " Search: $Search" -ForegroundColor Yellow
+        }
+
+        Write-Host " Page $($page + 1) of $totalPages" -ForegroundColor Yellow
+        Write-Host " ─────────────────────────────────────────────" -ForegroundColor DarkGray
+        Write-Host ""
+
+        for ($i = $start; $i -le $end; $i++) {
+            $cmd = $commands[$i]
+
+            Write-Host " Command:   " -ForegroundColor Yellow -NoNewline
+            Write-Host "$($cmd.Key)" -ForegroundColor Green
+
+            Write-Host " Usage:     " -ForegroundColor Yellow -NoNewline
+            Write-Host "$($cmd.Value.Usage)" -ForegroundColor Cyan
+
+            Write-Host " Summary:   " -ForegroundColor Yellow -NoNewline
+            Write-Host "$($cmd.Value.Summary)" -ForegroundColor White
+
+            Write-Host " Parameters:" -ForegroundColor Yellow
+
+            if ($cmd.Value.Parameters -and $cmd.Value.Parameters.Count -gt 0) {
+                foreach ($param in $cmd.Value.Parameters) {
+                    Write-Host "   - $param" -ForegroundColor White
+                }
+            }
+            else {
+                Write-Host "   - None" -ForegroundColor DarkGray
+            }
+
+            Write-Host " Details:   " -ForegroundColor Yellow -NoNewline
+            Write-Host "$($cmd.Value.Details)" -ForegroundColor White
+            Write-Host ""
+        }
+
+        if ($end -ge ($total - 1)) {
+            Write-Host "End of manual." -ForegroundColor DarkGray
+            Write-Host ""
+            break
+        }
+
+        $next = Read-Host "Press Enter for next page, or type q to quit"
+
+        if ($next -eq "q") {
+            break
+        }
+
+        $page++
+    }
 }
 
 function Show-MOTD {
@@ -284,13 +536,25 @@ function Show-MOTD {
     Write-Host "╚══════════════════════════════════════════════╝" -ForegroundColor Cyan
     Write-Host ""
 
-    Write-Host " Available Commands" -ForegroundColor Yellow
+    Write-Host " Command Overview" -ForegroundColor Yellow
     Write-Host " ─────────────────────────────────────────────" -ForegroundColor DarkGray
     Write-Host ""
 
     Show-CommandList
+
     Write-Host ""
+    Write-Host " Examples" -ForegroundColor Yellow
     Write-Host " ─────────────────────────────────────────────" -ForegroundColor DarkGray
+    Write-Host ""
+
+    Write-Host "  go-git" -ForegroundColor Cyan
+    Write-Host "  git-clo microsoft vscode -Open" -ForegroundColor Cyan
+    Write-Host "  open-repo vscode" -ForegroundColor Cyan
+    Write-Host "  omp pull profile" -ForegroundColor Cyan
+    Write-Host "  omp set profile" -ForegroundColor Cyan
+    Write-Host "  manual -Advanced -Search <cmdlet>" -ForegroundColor Cyan
+
+    Write-Host ""
 }
 
 Show-MOTD
