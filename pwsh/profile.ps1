@@ -15,6 +15,12 @@ if (Test-Path $Global:OmpThemePath) {
 # =========================
 
 $Global:ProfileCommands = [ordered]@{
+    "ai-tools" = @{
+    Summary    = "List installed AI coding tools"
+    Usage      = "ai-tools"
+    Parameters = @()
+    Details    = "Checks common AI coding CLI tools like Claude Code, Codex, Cursor, Aider, Gemini, and more."
+    }
     "go-git" = @{
         Summary    = "Open ~/Documents/GitHub"
         Usage      = "go-git"
@@ -160,8 +166,8 @@ $Global:ProfileCommands = [ordered]@{
     }
 
     "manual -Advanced -Search <cmdlet>" = @{
-        Summary    = "Show detailed paginated manual (also allows for specific search)"
-        Usage      = "manual -Advanced -Search git-clo -PageSize 5"
+        Summary    = "Show detailed paginated manual"
+        Usage      = "manual -Advanced -Search ai-tools -PageSize 5"
         Parameters = @(
             "-Advanced = Show detailed command documentation"
             "-Search   = Optional command search keyword"
@@ -382,6 +388,69 @@ function cls-all {
 }
 
 # =========================
+# AI Helpers
+# =========================
+
+function ai-tools {
+
+    $tools = [ordered]@{
+        "GitHub Copilot CLI" = "gh"
+        "OpenAI CLI"         = "openai"
+        "Claude Code"        = "claude"
+        "Codex CLI"          = "codex"
+        "Cursor"             = "cursor"
+        "Windsurf"           = "windsurf"
+        "Aider"              = "aider"
+        "Continue CLI"       = "continue"
+        "Gemini CLI"         = "gemini"
+        "Qwen Code"          = "qwen"
+        "Cline"              = "cline"
+        "Tabby"              = "tabby"
+    }
+
+    $installed = @()
+
+    foreach ($tool in $tools.GetEnumerator()) {
+
+        $cmd = Get-Command $tool.Value -ErrorAction SilentlyContinue
+
+        if ($cmd) {
+            $installed += [PSCustomObject]@{
+                Name = $tool.Key
+                Command = $tool.Value
+                Path = $cmd.Source
+            }
+        }
+    }
+
+    Write-Host ""
+    Write-Host "╔══════════════════════════════════════════════╗" -ForegroundColor Cyan
+    Write-Host "║          Installed AI Coding Tools          ║" -ForegroundColor Green
+    Write-Host "╚══════════════════════════════════════════════╝" -ForegroundColor Cyan
+    Write-Host ""
+
+    if ($installed.Count -eq 0) {
+        Write-Host "No supported AI coding tools detected." -ForegroundColor Yellow
+        Write-Host ""
+        return
+    }
+
+    foreach ($tool in $installed) {
+
+        Write-Host " Tool:    " -ForegroundColor Yellow -NoNewline
+        Write-Host $tool.Name -ForegroundColor Green
+
+        Write-Host " Command: " -ForegroundColor Yellow -NoNewline
+        Write-Host $tool.Command -ForegroundColor Cyan
+
+        Write-Host " Path:    " -ForegroundColor Yellow -NoNewline
+        Write-Host $tool.Path -ForegroundColor White
+
+        Write-Host ""
+    }
+}
+
+# =========================
 # Git Shortcuts
 # =========================
 
@@ -553,8 +622,8 @@ function Show-MOTD {
     Write-Host "  omp pull profile" -ForegroundColor Cyan
     Write-Host "  omp set profile" -ForegroundColor Cyan
     Write-Host "  manual -Advanced -Search <cmdlet>" -ForegroundColor Cyan
-
     Write-Host ""
+    Write-Host " ─────────────────────────────────────────────" -ForegroundColor DarkGray
 }
 
 Show-MOTD
