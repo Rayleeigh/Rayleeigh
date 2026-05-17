@@ -3,8 +3,15 @@
 # =========================
 
 $Global:OmpThemeDir = "$HOME\.poshthemes"
-$Global:OmpThemePath = "$Global:OmpThemeDir\cloud-native-azure.omp.json"
-$Global:OmpThemeUrl = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cloud-native-azure.omp.json"
+$Global:OmpThemeConfig = "$Global:OmpThemeDir\current-theme.txt"
+
+if (Test-Path $Global:OmpThemeConfig) {
+    $themeName = Get-Content $Global:OmpThemeConfig -First 1
+    $Global:OmpThemePath = Join-Path $Global:OmpThemeDir "$themeName.omp.json"
+}
+else {
+    $Global:OmpThemePath = "$Global:OmpThemeDir\cloud-native-azure.omp.json"
+}
 
 if (Test-Path $Global:OmpThemePath) {
     oh-my-posh init pwsh --config $Global:OmpThemePath | Invoke-Expression
@@ -15,22 +22,18 @@ if (Test-Path $Global:OmpThemePath) {
 # =========================
 
 $Global:ProfileCommands = [ordered]@{
-    "ai-tools" = @{
-    Summary    = "List installed AI coding tools"
-    Usage      = "ai-tools"
-    Parameters = @()
-    Details    = "Checks common AI coding CLI tools like Claude Code, Codex, Cursor, Aider, Gemini, and more."
-    }
     "go-git" = @{
         Summary    = "Open ~/Documents/GitHub"
         Usage      = "go-git"
+        Example    = "go-git"
         Parameters = @()
         Details    = "Creates ~/Documents/GitHub if missing, then moves your terminal into it."
     }
 
     "git-clo <user> <repo>" = @{
         Summary    = "Clone a GitHub repository"
-        Usage      = "git-clo microsoft vscode"
+        Usage      = "git-clo <user> <repo>"
+        Example    = "git-clo microsoft vscode"
         Parameters = @(
             "<user> = GitHub username or organization"
             "<repo> = Repository name only"
@@ -40,7 +43,8 @@ $Global:ProfileCommands = [ordered]@{
 
     "git-clo <user> <repo> -Open" = @{
         Summary    = "Clone + open in VS Code"
-        Usage      = "git-clo microsoft vscode -Open"
+        Usage      = "git-clo <user> <repo> -Open"
+        Example    = "git-clo microsoft vscode -Open"
         Parameters = @(
             "<user> = GitHub username or organization"
             "<repo> = Repository name only"
@@ -51,87 +55,30 @@ $Global:ProfileCommands = [ordered]@{
 
     "open-repo <repo>" = @{
         Summary    = "Find and open a local repo in VS Code"
-        Usage      = "open-repo vscode"
+        Usage      = "open-repo <repo>"
+        Example    = "open-repo vscode"
         Parameters = @(
             "<repo> = Full or partial local repository folder name"
         )
-        Details    = "Searches Documents/GitHub, Documents, Desktop, and Downloads for matching Git repositories."
+        Details    = "Searches common folders for matching Git repositories and opens the selected one in VS Code."
     }
 
-    "edit-profile" = @{
-        Summary    = "Open this profile in VS Code"
-        Usage      = "edit-profile"
+    "ai-tools" = @{
+        Summary    = "List installed AI coding tools"
+        Usage      = "ai-tools"
+        Example    = "ai-tools"
         Parameters = @()
-        Details    = "Opens your PowerShell profile file in VS Code."
-    }
-
-    "reload-profile" = @{
-        Summary    = "Reload this PowerShell profile"
-        Usage      = "reload-profile"
-        Parameters = @()
-        Details    = "Reloads your profile without restarting PowerShell."
-    }
-
-    "mkcd <folder>" = @{
-        Summary    = "Create a folder and enter it"
-        Usage      = "mkcd my-project"
-        Parameters = @(
-            "<folder> = Folder name or path to create"
-        )
-        Details    = "Creates the folder if missing, then moves into it."
-    }
-
-    "cls-all" = @{
-        Summary    = "Clear screen and command history"
-        Usage      = "cls-all"
-        Parameters = @()
-        Details    = "Clears the terminal screen and the current session command history."
-    }
-
-    "gs" = @{
-        Summary    = "Git status"
-        Usage      = "gs"
-        Parameters = @()
-        Details    = "Shortcut for git status."
-    }
-
-    "ga" = @{
-        Summary    = "Git add ."
-        Usage      = "ga"
-        Parameters = @()
-        Details    = "Stages all changed files in the current Git repository."
-    }
-
-    "gcmsg <message>" = @{
-        Summary    = "Git commit with message"
-        Usage      = 'gcmsg "Update profile tools"'
-        Parameters = @(
-            "<message> = Commit message wrapped in quotes"
-        )
-        Details    = "Creates a Git commit using the provided message."
-    }
-
-    "gp" = @{
-        Summary    = "Git push"
-        Usage      = "gp"
-        Parameters = @()
-        Details    = "Pushes committed changes to the configured remote branch."
-    }
-
-    "gl" = @{
-        Summary    = "Git pull"
-        Usage      = "gl"
-        Parameters = @()
-        Details    = "Pulls latest changes from the configured remote branch."
+        Details    = "Checks common AI coding tools and only lists the ones installed on your system."
     }
 
     "omp pull profile <theme>" = @{
         Summary    = "Download an Oh My Posh theme"
-        Usage      = "omp pull profile cloud-native-azure"
+        Usage      = "omp pull profile <theme>"
+        Example    = "omp pull profile cloud-native-azure"
         Parameters = @(
-            "pull      = Download/update action"
-            "profile   = Theme profile target"
-            "<theme>   = Theme name without .omp.json"
+            "pull    = Download/update action"
+            "profile = Theme profile target"
+            "<theme> = Theme name without .omp.json"
         )
         Details    = "Downloads a theme from the official Oh My Posh themes repository into ~/.poshthemes."
     }
@@ -139,6 +86,7 @@ $Global:ProfileCommands = [ordered]@{
     "omp list themes" = @{
         Summary    = "List locally installed Oh My Posh themes"
         Usage      = "omp list themes"
+        Example    = "omp list themes"
         Parameters = @(
             "list   = List action"
             "themes = Local themes target"
@@ -148,22 +96,101 @@ $Global:ProfileCommands = [ordered]@{
 
     "omp set profile <theme>" = @{
         Summary    = "Load a local Oh My Posh theme"
-        Usage      = "omp set profile cloud-native-azure"
+        Usage      = "omp set profile <theme>"
+        Example    = "omp set profile cloud-native-azure"
         Parameters = @(
-            "set      = Load/apply action"
-            "profile  = Theme profile target"
-            "<theme>  = Local theme name without .omp.json"
+            "set     = Load/apply action"
+            "profile = Theme profile target"
+            "<theme> = Local theme name without .omp.json"
         )
         Details    = "Loads the selected local Oh My Posh theme and reloads the PowerShell profile."
     }
 
+    "edit-profile" = @{
+        Summary    = "Open this profile in VS Code"
+        Usage      = "edit-profile"
+        Example    = "edit-profile"
+        Parameters = @()
+        Details    = "Opens your PowerShell profile file in VS Code."
+    }
+
+    "reload-profile" = @{
+        Summary    = "Reload this PowerShell profile"
+        Usage      = "reload-profile"
+        Example    = "reload-profile"
+        Parameters = @()
+        Details    = "Reloads your profile without restarting PowerShell."
+    }
+
+    "mkcd <folder>" = @{
+        Summary    = "Create a folder and enter it"
+        Usage      = "mkcd <folder>"
+        Example    = "mkcd my-project"
+        Parameters = @(
+            "<folder> = Folder name or path to create"
+        )
+        Details    = "Creates the folder if missing, then moves into it."
+    }
+
+    "cls-all" = @{
+        Summary    = "Clear screen and command history"
+        Usage      = "cls-all"
+        Example    = "cls-all"
+        Parameters = @()
+        Details    = "Clears the terminal screen and current session command history."
+    }
+
+    "gs" = @{
+        Summary    = "Git status"
+        Usage      = "gs"
+        Example    = "gs"
+        Parameters = @()
+        Details    = "Shortcut for git status."
+    }
+
+    "ga" = @{
+        Summary    = "Git add ."
+        Usage      = "ga"
+        Example    = "ga"
+        Parameters = @()
+        Details    = "Stages all changed files in the current Git repository."
+    }
+
+    "gcmsg <message>" = @{
+        Summary    = "Git commit with message"
+        Usage      = "gcmsg <message>"
+        Example    = 'gcmsg "Update profile tools"'
+        Parameters = @(
+            "<message> = Commit message wrapped in quotes"
+        )
+        Details    = "Creates a Git commit using the provided message."
+    }
+
+    "gp" = @{
+        Summary    = "Git push"
+        Usage      = "gp"
+        Example    = "gp"
+        Parameters = @()
+        Details    = "Pushes committed changes to the configured remote branch."
+    }
+
+    "gl" = @{
+        Summary    = "Git pull"
+        Usage      = "gl"
+        Example    = "gl"
+        Parameters = @()
+        Details    = "Pulls latest changes from the configured remote branch."
+    }
+
     "add-command <cmd> <summary>" = @{
         Summary    = "Add/update a command in this session"
-        Usage      = 'add-command "deploy <env>" "Deploy project" "deploy prod" @("<env> = Target environment") "Deploys the project."'
+        Usage      = "add-command <cmd> <summary> [usage] [example] [parameters] [details]"
+        Example    = 'add-command "deploy <env>" "Deploy project" "deploy <env>" "deploy prod" @("<env> = Target environment") "Deploys the project."'
         Parameters = @(
             "<cmd>        = Command name/signature"
             "<summary>    = Short description"
-            "<usage>      = Optional usage example"
+            "<usage>      = Optional syntax"
+            "<example>    = Optional terminal example"
             "<parameters> = Optional parameter list"
             "<details>    = Optional detailed explanation"
         )
@@ -173,19 +200,21 @@ $Global:ProfileCommands = [ordered]@{
     "manual" = @{
         Summary    = "Show compact command overview"
         Usage      = "manual"
+        Example    = "manual"
         Parameters = @()
         Details    = "Shows all registered profile commands in compact format."
     }
 
-    "manual -Advanced -Search <cmdlet>" = @{
+    "manual -Advanced" = @{
         Summary    = "Show detailed paginated manual"
-        Usage      = "manual -Advanced -Search ai-tools -PageSize 5"
+        Usage      = "manual -Advanced [-Search <keyword>] [-PageSize <number>]"
+        Example    = "manual -Advanced -Search git-clo -PageSize 5"
         Parameters = @(
             "-Advanced = Show detailed command documentation"
             "-Search   = Optional command search keyword"
             "-PageSize = Optional number of commands per page"
         )
-        Details    = "Shows detailed command help with usage, parameters, explanations, and optional search filtering."
+        Details    = "Shows detailed command help with usage, examples, parameters, explanations, and optional search filtering."
     }
 }
 
@@ -203,6 +232,8 @@ function add-command {
 
         [string]$Usage = $Command,
 
+        [string]$Example = $Command,
+
         [string[]]$Parameters = @(),
 
         [string]$Details = $Summary
@@ -211,6 +242,7 @@ function add-command {
     $Global:ProfileCommands[$Command] = @{
         Summary    = $Summary
         Usage      = $Usage
+        Example    = $Example
         Parameters = $Parameters
         Details    = $Details
     }
@@ -324,13 +356,67 @@ function open-repo {
     }
 
     Set-Location $selected.FullName
-
-    Write-Host ""
-    Write-Host "Opening repository:" -ForegroundColor Green
-    Write-Host $selected.FullName -ForegroundColor Cyan
-    Write-Host ""
-
     code .
+}
+
+# =========================
+# AI Coding Tools
+# =========================
+
+function ai-tools {
+    $tools = [ordered]@{
+        "GitHub Copilot CLI" = "gh"
+        "OpenAI CLI"         = "openai"
+        "Claude Code"        = "claude"
+        "Codex CLI"          = "codex"
+        "Cursor"             = "cursor"
+        "Windsurf"           = "windsurf"
+        "Aider"              = "aider"
+        "Continue CLI"       = "continue"
+        "Gemini CLI"         = "gemini"
+        "Qwen Code"          = "qwen"
+        "Cline"              = "cline"
+        "Tabby"              = "tabby"
+    }
+
+    $installed = @()
+
+    foreach ($tool in $tools.GetEnumerator()) {
+        $cmd = Get-Command $tool.Value -ErrorAction SilentlyContinue
+
+        if ($cmd) {
+            $installed += [PSCustomObject]@{
+                Name    = $tool.Key
+                Command = $tool.Value
+                Path    = $cmd.Source
+            }
+        }
+    }
+
+    Write-Host ""
+    Write-Host "╔══════════════════════════════════════════════╗" -ForegroundColor Cyan
+    Write-Host "║          Installed AI Coding Tools          ║" -ForegroundColor Green
+    Write-Host "╚══════════════════════════════════════════════╝" -ForegroundColor Cyan
+    Write-Host ""
+
+    if ($installed.Count -eq 0) {
+        Write-Host "No supported AI coding tools detected." -ForegroundColor Yellow
+        Write-Host ""
+        return
+    }
+
+    foreach ($tool in $installed) {
+        Write-Host " Tool:    " -ForegroundColor Yellow -NoNewline
+        Write-Host $tool.Name -ForegroundColor Green
+
+        Write-Host " Command: " -ForegroundColor Yellow -NoNewline
+        Write-Host $tool.Command -ForegroundColor Cyan
+
+        Write-Host " Path:    " -ForegroundColor Yellow -NoNewline
+        Write-Host $tool.Path -ForegroundColor White
+
+        Write-Host ""
+    }
 }
 
 # =========================
@@ -351,7 +437,6 @@ function omp {
     )
 
     if ($Action -eq "pull" -and $Target -eq "profile") {
-
         if (-not $Theme) {
             Write-Host "Usage: omp pull profile <theme-name>" -ForegroundColor Yellow
             Write-Host "Example: omp pull profile cloud-native-azure" -ForegroundColor Cyan
@@ -364,9 +449,7 @@ function omp {
         $themePath = Join-Path $Global:OmpThemeDir $themeFile
         $themeUrl = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/$themeFile"
 
-        Invoke-WebRequest `
-            -Uri $themeUrl `
-            -OutFile $themePath
+        Invoke-WebRequest -Uri $themeUrl -OutFile $themePath
 
         Write-Host ""
         Write-Host "Oh My Posh theme downloaded:" -ForegroundColor Green
@@ -377,14 +460,8 @@ function omp {
     if ($Action -eq "list" -and $Target -eq "themes") {
 
         if (!(Test-Path $Global:OmpThemeDir)) {
-            Write-Host "No local Oh My Posh themes found." -ForegroundColor Yellow
-            return
-        }
-
-        $themes = Get-ChildItem -Path $Global:OmpThemeDir -Filter "*.omp.json"
-
-        if (-not $themes) {
-            Write-Host "No local Oh My Posh themes found." -ForegroundColor Yellow
+            Write-Host "Theme directory not found:" -ForegroundColor Red
+            Write-Host $Global:OmpThemeDir -ForegroundColor Cyan
             return
         }
 
@@ -394,16 +471,19 @@ function omp {
         Write-Host "╚══════════════════════════════════════════════╝" -ForegroundColor Cyan
         Write-Host ""
 
-        foreach ($theme in $themes) {
-            $themeName = $theme.Name -replace "\.omp\.json$", ""
-            Write-Host "  $themeName" -ForegroundColor Cyan
-        }
+        Get-ChildItem `
+            -Path $Global:OmpThemeDir `
+            -File `
+            -Filter "*.omp.json" |
+        Format-Table `
+            Name,
+            LastWriteTime,
+            Length -AutoSize
 
         Write-Host ""
     }
 
     if ($Action -eq "set" -and $Target -eq "profile") {
-
         if (-not $Theme) {
             Write-Host "Usage: omp set profile <theme-name>" -ForegroundColor Yellow
             Write-Host "Example: omp set profile cloud-native-azure" -ForegroundColor Cyan
@@ -415,20 +495,16 @@ function omp {
         if (!(Test-Path $themePath)) {
             Write-Host "Theme not found locally:" -ForegroundColor Red
             Write-Host $themePath -ForegroundColor Cyan
-            Write-Host ""
-            Write-Host "Download it first with:" -ForegroundColor Yellow
-            Write-Host "omp pull profile $Theme" -ForegroundColor Cyan
             return
         }
 
-        $Global:OmpThemePath = $themePath
-
-        oh-my-posh init pwsh --config $themePath | Invoke-Expression
+        Set-Content -Path $Global:OmpThemeConfig -Value $Theme
 
         Write-Host ""
-        Write-Host "Oh My Posh theme loaded:" -ForegroundColor Green
-        Write-Host $themePath -ForegroundColor Cyan
+        Write-Host "Oh My Posh theme saved:" -ForegroundColor Green
+        Write-Host $Theme -ForegroundColor Cyan
         Write-Host ""
+        Write-Host "Reloading profile..." -ForegroundColor Yellow
 
         . $PROFILE
     }
@@ -460,69 +536,6 @@ function mkcd {
 function cls-all {
     Clear-Host
     Get-History | Clear-History
-}
-
-# =========================
-# AI Helpers
-# =========================
-
-function ai-tools {
-
-    $tools = [ordered]@{
-        "GitHub Copilot CLI" = "gh"
-        "OpenAI CLI"         = "openai"
-        "Claude Code"        = "claude"
-        "Codex CLI"          = "codex"
-        "Cursor"             = "cursor"
-        "Windsurf"           = "windsurf"
-        "Aider"              = "aider"
-        "Continue CLI"       = "continue"
-        "Gemini CLI"         = "gemini"
-        "Qwen Code"          = "qwen"
-        "Cline"              = "cline"
-        "Tabby"              = "tabby"
-    }
-
-    $installed = @()
-
-    foreach ($tool in $tools.GetEnumerator()) {
-
-        $cmd = Get-Command $tool.Value -ErrorAction SilentlyContinue
-
-        if ($cmd) {
-            $installed += [PSCustomObject]@{
-                Name = $tool.Key
-                Command = $tool.Value
-                Path = $cmd.Source
-            }
-        }
-    }
-
-    Write-Host ""
-    Write-Host "╔══════════════════════════════════════════════╗" -ForegroundColor Cyan
-    Write-Host "║          Installed AI Coding Tools          ║" -ForegroundColor Green
-    Write-Host "╚══════════════════════════════════════════════╝" -ForegroundColor Cyan
-    Write-Host ""
-
-    if ($installed.Count -eq 0) {
-        Write-Host "No supported AI coding tools detected." -ForegroundColor Yellow
-        Write-Host ""
-        return
-    }
-
-    foreach ($tool in $installed) {
-
-        Write-Host " Tool:    " -ForegroundColor Yellow -NoNewline
-        Write-Host $tool.Name -ForegroundColor Green
-
-        Write-Host " Command: " -ForegroundColor Yellow -NoNewline
-        Write-Host $tool.Command -ForegroundColor Cyan
-
-        Write-Host " Path:    " -ForegroundColor Yellow -NoNewline
-        Write-Host $tool.Path -ForegroundColor White
-
-        Write-Host ""
-    }
 }
 
 # =========================
@@ -569,6 +582,7 @@ function manual {
                 $_.Key -like "*$Search*" -or
                 $_.Value.Summary -like "*$Search*" -or
                 $_.Value.Usage -like "*$Search*" -or
+                $_.Value.Example -like "*$Search*" -or
                 $_.Value.Details -like "*$Search*"
             }
         )
@@ -636,6 +650,9 @@ function manual {
             Write-Host " Usage:     " -ForegroundColor Yellow -NoNewline
             Write-Host "$($cmd.Value.Usage)" -ForegroundColor Cyan
 
+            Write-Host " Example:   " -ForegroundColor Yellow -NoNewline
+            Write-Host "$($cmd.Value.Example)" -ForegroundColor Magenta
+
             Write-Host " Summary:   " -ForegroundColor Yellow -NoNewline
             Write-Host "$($cmd.Value.Summary)" -ForegroundColor White
 
@@ -694,11 +711,12 @@ function Show-MOTD {
     Write-Host "  go-git" -ForegroundColor Cyan
     Write-Host "  git-clo microsoft vscode -Open" -ForegroundColor Cyan
     Write-Host "  open-repo vscode" -ForegroundColor Cyan
-    Write-Host "  omp pull profile" -ForegroundColor Cyan
-    Write-Host "  omp set profile" -ForegroundColor Cyan
-    Write-Host "  manual -Advanced -Search <cmdlet>" -ForegroundColor Cyan
+    Write-Host "  omp pull profile cloud-native-azure" -ForegroundColor Cyan
+    Write-Host "  omp list themes" -ForegroundColor Cyan
+    Write-Host "  omp set profile cloud-native-azure" -ForegroundColor Cyan
+    Write-Host "  manual -Advanced -Search git-clo" -ForegroundColor Cyan
+
     Write-Host ""
-    Write-Host " ─────────────────────────────────────────────" -ForegroundColor DarkGray
 }
 
 Show-MOTD
