@@ -125,24 +125,36 @@ $Global:ProfileCommands = [ordered]@{
         Details    = "Pulls latest changes from the configured remote branch."
     }
 
-    "omp pull profile" = @{
-        Summary    = "Download/update Oh My Posh theme"
-        Usage      = "omp pull profile"
+    "omp pull profile <theme>" = @{
+        Summary    = "Download an Oh My Posh theme"
+        Usage      = "omp pull profile cloud-native-azure"
         Parameters = @(
-            "pull    = Download/update action"
-            "profile = Target local profile theme"
+            "pull      = Download/update action"
+            "profile   = Theme profile target"
+            "<theme>   = Theme name without .omp.json"
         )
-        Details    = "Downloads the cloud-native-azure Oh My Posh theme into ~/.poshthemes."
+        Details    = "Downloads a theme from the official Oh My Posh themes repository into ~/.poshthemes."
     }
 
-    "omp set profile" = @{
-        Summary    = "Load local Oh My Posh theme"
-        Usage      = "omp set profile"
+    "omp list themes" = @{
+        Summary    = "List locally installed Oh My Posh themes"
+        Usage      = "omp list themes"
         Parameters = @(
-            "set     = Load/apply action"
-            "profile = Target local profile theme"
+            "list   = List action"
+            "themes = Local themes target"
         )
-        Details    = "Loads the local Oh My Posh theme from ~/.poshthemes."
+        Details    = "Lists all .omp.json theme files stored in ~/.poshthemes."
+    }
+
+    "omp set profile <theme>" = @{
+        Summary    = "Load a local Oh My Posh theme"
+        Usage      = "omp set profile cloud-native-azure"
+        Parameters = @(
+            "set      = Load/apply action"
+            "profile  = Theme profile target"
+            "<theme>  = Local theme name without .omp.json"
+        )
+        Details    = "Loads the selected local Oh My Posh theme and reloads the PowerShell profile."
     }
 
     "add-command <cmd> <summary>" = @{
@@ -328,34 +340,97 @@ function open-repo {
 function omp {
     param(
         [Parameter(Mandatory=$true)]
-        [ValidateSet("pull", "set")]
+        [ValidateSet("pull", "set", "list")]
         [string]$Action,
 
         [Parameter(Mandatory=$true)]
-        [ValidateSet("profile")]
-        [string]$Target
+        [ValidateSet("profile", "themes")]
+        [string]$Target,
+
+        [string]$Theme
     )
 
     if ($Action -eq "pull" -and $Target -eq "profile") {
-        New-Item -ItemType Directory -Force $Global:OmpThemeDir | Out-Null
 
-        Invoke-WebRequest `
-            -Uri $Global:OmpThemeUrl `
-            -OutFile $Global:OmpThemePath
-
-        Write-Host "Oh My Posh theme downloaded:" -ForegroundColor Green
-        Write-Host $Global:OmpThemePath -ForegroundColor Cyan
-    }
-
-    if ($Action -eq "set" -and $Target -eq "profile") {
-        if (!(Test-Path $Global:OmpThemePath)) {
-            Write-Host "Theme not found. Run this first:" -ForegroundColor Yellow
-            Write-Host "omp pull profile" -ForegroundColor Cyan
+        if (-not $Theme) {
+            Write-Host "Usage: omp pull profile <theme-name>" -ForegroundColor Yellow
+            Write-Host "Example: omp pull profile cloud-native-azure" -ForegroundColor Cyan
             return
         }
 
-        oh-my-posh init pwsh --config $Global:OmpThemePath | Invoke-Expression
-        Write-Host "Oh My Posh profile loaded." -ForegroundColor Green
+        New-Item -ItemType Directory -Force $Global:OmpThemeDir | Out-Null
+
+        $themeFile = "$Theme.omp.json"
+        $themePath = Join-Path $Global:OmpThemeDir $themeFile
+        $themeUrl = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/$themeFile"
+
+        Invoke-WebRequest `
+            -Uri $themeUrl `
+            -OutFile $themePath
+
+        Write-Host ""
+        Write-Host "Oh My Posh theme downloaded:" -ForegroundColor Green
+        Write-Host $themePath -ForegroundColor Cyan
+        Write-Host ""
+    }
+
+    if ($Action -eq "list" -and $Target -eq "themes") {
+
+        if (!(Test-Path $Global:OmpThemeDir)) {
+            Write-Host "No local Oh My Posh themes found." -ForegroundColor Yellow
+            return
+        }
+
+        $themes = Get-ChildItem -Path $Global:OmpThemeDir -Filter "*.omp.json"
+
+        if (-not $themes) {
+            Write-Host "No local Oh My Posh themes found." -ForegroundColor Yellow
+            return
+        }
+
+        Write-Host ""
+        Write-Host "╔══════════════════════════════════════════════╗" -ForegroundColor Cyan
+        Write-Host "║          Local Oh My Posh Themes            ║" -ForegroundColor Green
+        Write-Host "╚══════════════════════════════════════════════╝" -ForegroundColor Cyan
+        Write-Host ""
+
+        foreach ($theme in $themes) {
+            $themeName = $theme.Name -replace "\.omp\.json$", ""
+            Write-Host "  $themeName" -ForegroundColor Cyan
+        }
+
+        Write-Host ""
+    }
+
+    if ($Action -eq "set" -and $Target -eq "profile") {
+
+        if (-not $Theme) {
+            Write-Host "Usage: omp set profile <theme-name>" -ForegroundColor Yellow
+            Write-Host "Example: omp set profile cloud-native-azure" -ForegroundColor Cyan
+            return
+        }
+
+        $themePath = Join-Path $Global:OmpThemeDir "$Theme.omp.json"
+
+        if (!(Test-Path $themePath)) {
+            Write-Host "Theme not found locally:" -ForegroundColor Red
+            Write-Host $themePath -ForegroundColor Cyan
+            Write-Host ""
+            Write-Host "Download it first with:" -ForegroundColor Yellow
+            Write-Host "omp pull profile $Theme" -ForegroundColor Cyan
+            return
+        }
+
+        $Global:OmpThemePath = $themePath
+
+        oh-my-posh init pwsh --config $themePath | Invoke-Expression
+
+        Write-Host ""
+        Write-Host "Oh My Posh theme loaded:" -ForegroundColor Green
+        Write-Host $themePath -ForegroundColor Cyan
+        Write-Host ""
+
+        . $PROFILE
     }
 }
 
