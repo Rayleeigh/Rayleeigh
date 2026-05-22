@@ -303,9 +303,9 @@ function git-clo {
     }
 }
 
-function open-repo {
+function Open-Repo {
     param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]$Repo
     )
 
@@ -316,17 +316,39 @@ function open-repo {
         "$HOME\Downloads"
     )
 
-    $matches = foreach ($root in $searchRoots) {
-        if (Test-Path $root) {
-            Get-ChildItem -Path $root -Directory -Recurse -ErrorAction SilentlyContinue |
+    $Repo = $Repo.Trim()
+
+    if (-not (Get-Command code -ErrorAction SilentlyContinue)) {
+        Write-Host "VS Code command 'code' was not found in PATH." -ForegroundColor Red
+        return
+    }
+
+    $results = foreach ($root in $searchRoots) {
+        if (Test-Path -LiteralPath $root) {
+            Get-ChildItem -LiteralPath $root -Directory -Recurse -Force -ErrorAction SilentlyContinue |
                 Where-Object {
-                    $_.Name -like "*$Repo*" -and
-                    (Test-Path "$($_.FullName)\.git")
+                    Test-Path -LiteralPath (Join-Path $_.FullName ".git")
+                } |
+                ForEach-Object {
+                    $_.FullName
                 }
+
+            if (Test-Path -LiteralPath (Join-Path $root ".git")) {
+                $root
+            }
         }
     }
 
-    if (-not $matches) {
+    $results = @($results | Sort-Object -Unique)
+
+    $matches = @(
+        $results | Where-Object {
+            $name = Split-Path $_ -Leaf
+            $name -ieq $Repo -or $name -like "*$Repo*"
+        } | Sort-Object -Unique
+    )
+
+    if ($matches.Count -eq 0) {
         Write-Host ""
         Write-Host "Repository not found: $Repo" -ForegroundColor Red
         return
@@ -338,13 +360,13 @@ function open-repo {
         Write-Host ""
 
         for ($i = 0; $i -lt $matches.Count; $i++) {
-            Write-Host "[$i] $($matches[$i].FullName)"
+            Write-Host "[$i] $($matches[$i])"
         }
 
         Write-Host ""
         $choice = Read-Host "Choose repository number"
 
-        if ($choice -notmatch '^\d+$' -or [int]$choice -ge $matches.Count) {
+        if ($choice -notmatch '^\d+$' -or [int]$choice -lt 0 -or [int]$choice -ge $matches.Count) {
             Write-Host "Invalid selection." -ForegroundColor Red
             return
         }
@@ -355,8 +377,14 @@ function open-repo {
         $selected = $matches[0]
     }
 
-    Set-Location $selected.FullName
-    code .
+    try {
+        Set-Location -LiteralPath $selected
+        & code $selected
+    }
+    catch {
+        Write-Host "Failed to open repository path: $selected" -ForegroundColor Red
+        Write-Host $_.Exception.Message -ForegroundColor DarkGray
+    }
 }
 
 # =========================
