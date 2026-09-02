@@ -19,11 +19,6 @@
 I'm **Rayleeigh**, an IT professional passionate about building systems that make everyday life smarter and more efficient.  
 I focus on:
 
-- 🏡 **Home Automation**  
-- 🖥️ **Self-Hosting**  
-- 🚀 **Advancement Projects**  
-- ⚙️ **IT Infrastructure + Automation**
-
 ---
 
 <!-- ========================= -->
@@ -45,17 +40,3 @@ I focus on:
 <p>
   <img src="https://skillicons.dev/icons?i=mysql,postgres" />
 </p>
-
----
-
-<!-- ========================= -->
-<!--    NAMING CONVENTION      -->
-<!-- ========================= -->
-## 🏡 HAA Naming Convention  
-
-All Home Automation projects follow the format:
-
-HAA + NAME
-
-- **HAA** = Home Automation and Advancement  
-- **NAME** = Project name (example: `Kuma`)  
